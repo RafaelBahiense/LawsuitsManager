@@ -1,0 +1,82 @@
+seeds:
+  - State:
+      id: 1
+      name: "Acre"
+  - State:
+      id: 2
+      name: "Alagoas"
+  - State:
+      id: 3
+      name: "Amapá"
+  - State:
+      id: 4
+      name: "Amazonas"
+  - State:
+      id: 5
+      name: "Bahia"
+  - State:
+      id: 6
+      name: "Ceará"
+  - State:
+      id: 7
+      name: "Distrito Federal"
+  - State:
+      id: 8
+      name: "Espírito Santo"
+  - State:
+      id: 9
+      name: "Goiás"
+  - State:
+      id: 10
+      name: "Maranhão"
+  - State:
+      id: 11
+      name: "Mato Grosso"
+  - State:
+      id: 12
+      name: "Mato Grosso do Sul"
+  - State:
+      id: 13
+      name: "Minas Gerais"
+  - State:
+      id: 14
+      name: "Pará"
+  - State:
+      id: 15
+      name: "Paraíba"
+  - State:
+      id: 16
+      name: "Paraná"
+  - State:
+      id: 17
+      name: "Pernambuco"
+  - State:
+      id: 18
+      name: "Piauì"
+  - State:
+      id: 19
+      name: "Rio de Janeiro"
+  - State:
+      id: 20
+      name: "Rio Grande do Norte"
+  - State:
+      id: 21
+      name: "Rio Grande do Sul"
+  - State:
+      id: 22
+      name: "Rondônia"
+  - State:
+      id: 23
+      name: "Roraima"
+  - State:
+      id: 24
+      name: "Santa Catarina"
+  - State:
+      id: 25
+      name: "São Paulo"
+  - State:
+      id: 26
+      name: "Sergipe"
+  - State:
+      id: 27
+      name: "Tocantins"

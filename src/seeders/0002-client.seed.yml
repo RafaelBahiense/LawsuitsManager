@@ -1,0 +1,11 @@
+seeds:
+  - Client:
+      id: 1
+      name: "Empresa A"
+      cnpj: "000000000001"
+      stateId: 19
+  - Client:
+      id: 2
+      name: "Empresa B"
+      cnpj: "000000000002"
+      stateId: 25
