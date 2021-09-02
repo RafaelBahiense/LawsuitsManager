@@ -7,3 +7,8 @@ export async function getAll(_: Request, res: Response) {
   const lawsuits = await service.getAll();
   res.status(httpStatus.OK).send(lawsuits);
 }
+
+export async function getAllSum(_: Request, res: Response) {
+  const sum = await service.getAllSum();
+  res.status(httpStatus.OK).send(sum);
+}
