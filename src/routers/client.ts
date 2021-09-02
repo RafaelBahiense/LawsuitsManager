@@ -5,5 +5,9 @@ import * as controller from "../controllers/client";
 const router = Router();
 
 router.get("/client", controller.getAll);
+router.get(
+  "/client/:clientId/state/:stateId/average",
+  controller.getAverageById
+);
 
 export default router;
