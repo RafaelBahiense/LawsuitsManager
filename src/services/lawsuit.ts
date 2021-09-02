@@ -1,6 +1,7 @@
 import { getRepository } from "typeorm";
 
 import Lawsuit from "../entities/Lawsuit";
+import LawsuitInterface from "../interfaces/Lawsuit";
 
 export async function getAll(queryParams: any) {
   const query = getRepository(Lawsuit)
@@ -22,6 +23,20 @@ export async function getAll(queryParams: any) {
     query.andWhere("lawsuit.number like :like", { like: "%" + like + "%" });
 
   return query.getMany();
+}
+
+export async function register(lawsuit: LawsuitInterface) {
+  const lawsuitRepository = getRepository(Lawsuit);
+  const lawsuitInstance = lawsuitRepository.create();
+
+  lawsuitInstance.clientId = lawsuit.clientId;
+  lawsuitInstance.stateId = lawsuit.stateId;
+  lawsuitInstance.number = lawsuit.number;
+  lawsuitInstance.value = lawsuit.value;
+  lawsuitInstance.created_at = lawsuit.created_at;
+  lawsuitInstance.status = lawsuit.status;
+
+  await lawsuitRepository.save(lawsuitInstance);
 }
 
 export async function getAllSum() {

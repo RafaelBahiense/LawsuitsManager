@@ -7,5 +7,6 @@ const router = Router();
 router.get("/lawsuit", controller.getAll);
 router.get("/lawsuit/sum", controller.getAllSum);
 router.get("/lawsuit/count", controller.getCountByQuery);
+router.post("/lawsuit", controller.register);
 
 export default router;
