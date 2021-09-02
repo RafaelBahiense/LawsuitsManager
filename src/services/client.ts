@@ -1,4 +1,4 @@
-import { getRepository } from "typeorm";
+import { getRepository, createQueryBuilder } from "typeorm";
 
 import Client from "../entities/Client";
 import Lawsuit from "../entities/Lawsuit";
@@ -17,4 +17,21 @@ export async function getAverageById(clientId: number, stateId: number) {
     .getRawOne();
   const average = sum / count;
   return average;
+}
+
+export async function getClientsAndLawSuits(queryParams: any) {
+  const query = await createQueryBuilder(Client)
+    .select("client")
+    .from(Client, "client")
+    .leftJoinAndMapMany(
+      "client.lawsuit",
+      Lawsuit,
+      "lawsuit",
+      'lawsuit."clientId" = client.id'
+    );
+
+  const sameOrigin = queryParams["same-origin"];
+  if (sameOrigin) query.andWhere("lawsuit.stateId = client.stateId");
+
+  return query.getMany();
 }

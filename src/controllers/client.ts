@@ -25,3 +25,12 @@ export async function getAverageById(req: Request, res: Response) {
     console.log(e);
   }
 }
+
+export async function getClientsAndLawSuits(req: Request, res: Response) {
+  try {
+    const clientsAndLawsuits = await service.getClientsAndLawSuits(req.query);
+    res.status(httpStatus.OK).send(clientsAndLawsuits);
+  } catch (e) {
+    console.log(e);
+  }
+}
