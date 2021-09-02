@@ -10,5 +10,6 @@ router.get(
   "/client/:clientId/state/:stateId/average",
   controller.getAverageById
 );
+router.post("/client", controller.register);
 
 export default router;

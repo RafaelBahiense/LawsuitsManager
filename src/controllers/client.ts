@@ -2,6 +2,20 @@ import { Request, Response } from "express";
 import httpStatus from "http-status";
 
 import * as service from "../services/client";
+import ClienteInterface from "../interfaces/Client";
+
+export async function register(req: Request, res: Response) {
+  try {
+    const { name, cnpj, stateId }: ClienteInterface = req.body;
+    if (!name || !cnpj || !stateId)
+      return res.sendStatus(httpStatus.BAD_REQUEST);
+
+    await service.register({ name, cnpj, stateId });
+    res.sendStatus(httpStatus.CREATED);
+  } catch (e) {
+    console.log(e);
+  }
+}
 
 export async function getAll(_: Request, res: Response) {
   try {

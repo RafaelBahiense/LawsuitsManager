@@ -2,9 +2,21 @@ import { getRepository, createQueryBuilder } from "typeorm";
 
 import Client from "../entities/Client";
 import Lawsuit from "../entities/Lawsuit";
+import ClientInterface from "../interfaces/Client";
 
 export async function getAll() {
   return await getRepository(Client).find();
+}
+
+export async function register(client: ClientInterface) {
+  const clientRepository = getRepository(Client);
+  const clientInstance = clientRepository.create();
+
+  clientInstance.name = client.name;
+  clientInstance.cnpj = client.cnpj;
+  clientInstance.stateId = client.stateId;
+
+  await clientRepository.save(clientInstance);
 }
 
 export async function getAverageById(clientId: number, stateId: number) {
