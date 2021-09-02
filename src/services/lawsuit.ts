@@ -13,3 +13,19 @@ export async function getAllSum() {
     .where("lawsuit.status = true")
     .getRawOne();
 }
+
+export async function getCountByQuery(queryParams: any) {
+  const query = getRepository(Lawsuit)
+    .createQueryBuilder("lawsuit")
+    .where(`lawsuit.value IS NOT NULL`);
+
+  const greaterThanValue = parseInt(queryParams["gt-value"]);
+  if (greaterThanValue)
+    query.andWhere("lawsuit.value > :greaterThanValue", { greaterThanValue });
+
+  const lessThanValue = parseInt(queryParams["lt-value"]);
+  if (lessThanValue)
+    query.andWhere("lawsuit.value < :lessThanValue", { lessThanValue });
+
+  return await query.getCount();
+}
