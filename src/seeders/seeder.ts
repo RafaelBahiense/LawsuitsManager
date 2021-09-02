@@ -44,10 +44,10 @@ async function runSeedFile(filename: string, connection: Connection) {
   }
 }
 
-async function init() {
-  console.log("Connecting to database...");
+export default async function seed(auto = false) {
+  if (!auto) console.log("Connecting to database...");
   const connection = await connectDatabase();
-  console.log("Connected!");
+  if (!auto) console.log("Connected!");
 
   const files = fs.readdirSync(path.join(__dirname));
 
@@ -58,13 +58,17 @@ async function init() {
     )
       continue;
 
-    if (readline.keyInYNStrict(`Run seed file "${file}"? `)) {
+    if (auto) {
+      await runSeedFile(file, connection);
+    } else if (readline.keyInYNStrict(`Run seed file "${file}"? `)) {
       await runSeedFile(file, connection);
     }
   }
 
-  console.log("Closing connection to database...");
+  if (!auto) console.log("Closing connection to database...");
   await connection.close();
 }
 
-init();
+if (require.main === module) {
+  seed();
+}

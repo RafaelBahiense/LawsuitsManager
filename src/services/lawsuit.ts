@@ -40,6 +40,5 @@ export async function getCountByQuery(queryParams: any) {
   const lessThanValue = parseInt(queryParams["lt-value"]);
   if (lessThanValue)
     query.andWhere("lawsuit.value < :lessThanValue", { lessThanValue });
-
   return await query.getCount();
 }
