@@ -3,9 +3,9 @@ import httpStatus from "http-status";
 
 import * as service from "../services/lawsuit";
 
-export async function getAll(_: Request, res: Response) {
+export async function getAll(req: Request, res: Response) {
   try {
-    const lawsuits = await service.getAll();
+    const lawsuits = await service.getAll(req.query);
     res.status(httpStatus.OK).send(lawsuits);
   } catch (e) {
     console.log(e);

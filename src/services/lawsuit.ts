@@ -2,8 +2,22 @@ import { getRepository } from "typeorm";
 
 import Lawsuit from "../entities/Lawsuit";
 
-export async function getAll() {
-  return await getRepository(Lawsuit).find();
+export async function getAll(queryParams: any) {
+  const query = getRepository(Lawsuit)
+    .createQueryBuilder("lawsuit")
+    .where(`lawsuit.created_at IS NOT NULL`);
+
+  const year = queryParams.year;
+  if (year) query.andWhere('EXTRACT(year FROM "created_at") = :year', { year });
+
+  const month = queryParams.month;
+  if (month)
+    query.andWhere('EXTRACT(month FROM "created_at") = :month', { month });
+
+  const day = queryParams.day;
+  if (day) query.andWhere('EXTRACT(day FROM "created_at") = :day', { day });
+
+  return query.getMany();
 }
 
 export async function getAllSum() {
