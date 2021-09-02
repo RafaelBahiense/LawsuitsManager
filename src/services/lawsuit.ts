@@ -17,6 +17,10 @@ export async function getAll(queryParams: any) {
   const day = queryParams.day;
   if (day) query.andWhere('EXTRACT(day FROM "created_at") = :day', { day });
 
+  const like = queryParams.like;
+  if (like)
+    query.andWhere("lawsuit.number like :like", { like: "%" + like + "%" });
+
   return query.getMany();
 }
 

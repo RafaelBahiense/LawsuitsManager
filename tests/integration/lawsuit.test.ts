@@ -120,9 +120,33 @@ describe("GET /lawsuit", () => {
     ]);
   });
 
-  it("a lista de Processos de Setembro de 2007", async () => {
+  it("Retorna a lista de Processos de Setembro de 2007", async () => {
     const response = await agent.get("/api/lawsuit?year=2007&month=9");
     expect(response.body).toEqual([
+      {
+        id: 10,
+        clientId: 2,
+        stateId: 4,
+        number: "00010TRABAM",
+        value: 100000,
+        created_at: "2007-09-05T03:00:00.000Z",
+        status: false,
+      },
+    ]);
+  });
+
+  it("Retorna a lista de processos que contenham a sigla “TRAB”", async () => {
+    const response = await agent.get("/api/lawsuit?like=TRAB");
+    expect(response.body).toEqual([
+      {
+        id: 3,
+        clientId: 1,
+        stateId: 13,
+        number: "00003TRABMG",
+        value: 1000000,
+        created_at: "2007-10-30T02:00:00.000Z",
+        status: false,
+      },
       {
         id: 10,
         clientId: 2,
