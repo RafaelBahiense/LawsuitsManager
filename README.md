@@ -30,6 +30,10 @@ Link para acessar a [Documentação da API]
 
 [documentação da api]: https://documenter.getpostman.com/view/16971079/U16eunpm
 
+## Deploy
+
+Esse projeto possui um deploy funcional na Heroku: https://lawsuitsmanager.herokuapp.com
+
 ## Como rodar
 
 1. Clone esse repositório
@@ -76,3 +80,29 @@ npm i
 ```
 
 ## Casos de Teste
+
+Podem ser verificados rodando os testes automatizados ou pelo deploy e local coms as seguintes urls:
+
+Caso de teste 1: Retorna a soma dos processos ativos
+
+> https://lawsuitsmanager.herokuapp.com/api/lawsuit/sum
+
+Caso de teste 2: Retorna a média do valor dos processos no Rio de Janeiro para o Cliente "Empresa A
+
+> https://lawsuitsmanager.herokuapp.com/api/client/1/state/19/average
+
+Caso de teste 3: Retorna o Número de processos com valor acima de R$ 100.000,00
+
+> https://lawsuitsmanager.herokuapp.com/api/lawsuit/count?gt-value=10000000
+
+Caso de teste 4: Retorna a lista de Processos de Setembro de 2007
+
+> https://lawsuitsmanager.herokuapp.com/api/lawsuit?year=2007&month=9
+
+Caso de teste 5: Retorna a lista de processos no mesmo estado do cliente, para cada um dos clientes
+
+> https://lawsuitsmanager.herokuapp.com/api/client/lawsuits?same-origin=true
+
+Caso de teste 6: Retorna a lista de processos que contenham a sigla “TRAB”
+
+> https://lawsuitsmanager.herokuapp.com/api/lawsuit?like=TRAB"
