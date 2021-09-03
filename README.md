@@ -49,7 +49,7 @@ npm i
 ```
 
 3. Crie um banco de dados PostgresSQL "your_database" e "your_database_test"
-4. Renomeie `example.local.dev.env` -> `local.dev.env` e `example.local.test.env` -> `local.test.env`
+4. Renomeie `.env.example` -> `.env` faça uma cópia e nomeie `.env.test` para os dados do banco de teste
 5. Configure os arquivos .env como indicado
 6. Rode as migrations
 
@@ -76,12 +76,12 @@ npm run dev
 1. Após configurado rode
 
 ```bash
-npm i
+npm run test
 ```
 
 ## Casos de Teste
 
-Podem ser verificados rodando os testes automatizados ou pelo deploy e local coms as seguintes urls:
+Podem ser verificados rodando os testes automatizados ou pelo deploy e local com as seguintes urls:
 
 Caso de teste 1: Retorna a soma dos processos ativos
 
