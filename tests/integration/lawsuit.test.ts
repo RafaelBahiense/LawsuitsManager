@@ -1,9 +1,11 @@
 import supertest from "supertest";
+import { getRepository } from "typeorm";
 
 import "../../src/config/env";
 import app, { init } from "../../src/app";
 import seed from "../../src/seeders/seeder";
 import { cleanDB, endConnection } from "../utils/database";
+import Lawsuit from "../../src/entities/Lawsuit";
 
 const agent = supertest(app);
 jest.setTimeout(10000);
@@ -15,8 +17,6 @@ beforeAll(async () => {
   await seed(true);
   await init();
 });
-
-//beforeEach(async () => {});
 
 afterAll(async () => {
   await cleanDB();
@@ -120,7 +120,7 @@ describe("GET /lawsuit", () => {
     ]);
   });
 
-  it("Retorna a lista de Processos de Setembro de 2007", async () => {
+  it("(Caso de teste 4) Retorna a lista de Processos de Setembro de 2007", async () => {
     const response = await agent.get("/api/lawsuit?year=2007&month=9");
     expect(response.body).toEqual([
       {
@@ -135,7 +135,7 @@ describe("GET /lawsuit", () => {
     ]);
   });
 
-  it("Retorna a lista de processos que contenham a sigla “TRAB”", async () => {
+  it("(Caso de teste 6) Retorna a lista de processos que contenham a sigla “TRAB”", async () => {
     const response = await agent.get("/api/lawsuit?like=TRAB");
     expect(response.body).toEqual([
       {
@@ -161,7 +161,7 @@ describe("GET /lawsuit", () => {
 });
 
 describe("GET /lawsuit/sum", () => {
-  it("Retorna a soma dos processos ativos", async () => {
+  it("(Caso de teste 1) Retorna a soma dos processos ativos", async () => {
     const response = await agent.get("/api/lawsuit/sum");
     expect(response.body).toEqual({
       sum: "108700000",
@@ -170,10 +170,34 @@ describe("GET /lawsuit/sum", () => {
 });
 
 describe("GET /lawsuit/count", () => {
-  it("Retorna o Número de processos com valor acima de R$ 100.000,00", async () => {
+  it("(Caso de teste 3) Retorna o Número de processos com valor acima de R$ 100.000,00", async () => {
     const response = await agent.get("/api/lawsuit/count?gt-value=10000000");
     expect(response.body).toEqual({
       count: 2,
     });
+  });
+});
+
+describe("POST /lawsuit", () => {
+  const lawsuit = {
+    clientId: 2,
+    stateId: 20,
+    number: "00015CIVILRN",
+    value: 4900000,
+    created_at: "2021-09-02",
+    status: true,
+  };
+
+  it("Registra o cliente", async () => {
+    await agent.post("/api/lawsuit").send(lawsuit);
+
+    const result = await getRepository(Lawsuit).findOne({
+      where: { number: lawsuit.number },
+    });
+
+    // @ts-ignore
+    delete lawsuit.created_at;
+
+    expect(result).toEqual(expect.objectContaining(lawsuit));
   });
 });
