@@ -1,4 +1,5 @@
 import supertest from "supertest";
+import { getRepository } from "typeorm";
 
 import "../../src/config/env";
 import app, { init } from "../../src/app";
@@ -42,7 +43,7 @@ describe("GET /client", () => {
 });
 
 describe("GET /client/:clientId/state/:stateId/average", () => {
-  it('Retorna a média do valor dos processos no Rio de Janeiro para o Cliente "Empresa A"', async () => {
+  it('(Caso de teste 2) Retorna a média do valor dos processos no Rio de Janeiro para o Cliente "Empresa A"', async () => {
     const response = await agent.get("/api/client/1/state/19/average");
     expect(response.body).toEqual({
       average: 11000000,
@@ -51,7 +52,7 @@ describe("GET /client/:clientId/state/:stateId/average", () => {
 });
 
 describe("GET /client/lawsuits", () => {
-  it("Retorna a lista de processos no mesmo estado do cliente, para cada um dos clientes", async () => {
+  it("(Caso de teste 5) Retorna a lista de processos no mesmo estado do cliente, para cada um dos clientes", async () => {
     const response = await agent.get("/api/client/lawsuits?same-origin=true");
     expect(response.body).toEqual([
       {
@@ -107,5 +108,23 @@ describe("GET /client/lawsuits", () => {
         ],
       },
     ]);
+  });
+});
+
+describe("POST /client", () => {
+  const client = {
+    name: "Empresa C",
+    cnpj: "000000000003",
+    stateId: 10,
+  };
+
+  it("Registra o cliente", async () => {
+    await agent.post("/api/client").send(client);
+
+    const result = await getRepository("client").findOne({
+      where: { cnpj: client.cnpj },
+    });
+
+    expect(result).toEqual(expect.objectContaining(client));
   });
 });
