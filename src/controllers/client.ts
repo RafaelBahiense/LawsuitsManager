@@ -3,14 +3,19 @@ import httpStatus from "http-status";
 
 import * as service from "../services/client";
 import ClienteInterface from "../interfaces/Client";
+import schema from "../schemas/createNewClient";
 
 export async function register(req: Request, res: Response) {
   try {
-    const { name, cnpj, stateId }: ClienteInterface = req.body;
-    if (!name || !cnpj || !stateId)
+    const client: ClienteInterface = req.body;
+    if (!client.name || !client.cnpj || !client.stateId)
       return res.sendStatus(httpStatus.BAD_REQUEST);
 
-    await service.register({ name, cnpj, stateId });
+    const validation = schema.validate(client);
+    if (validation.error)
+      return res.sendStatus(httpStatus.UNPROCESSABLE_ENTITY);
+
+    await service.register(client);
     res.sendStatus(httpStatus.CREATED);
   } catch (e) {
     console.log(e);

@@ -188,7 +188,7 @@ describe("POST /lawsuit", () => {
     status: true,
   };
 
-  it("Registra o cliente", async () => {
+  it("Registra o processo", async () => {
     await agent.post("/api/lawsuit").send(lawsuit);
 
     const result = await getRepository(Lawsuit).findOne({

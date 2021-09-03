@@ -3,6 +3,7 @@ import httpStatus from "http-status";
 
 import * as service from "../services/lawsuit";
 import LawsuitInterface from "../interfaces/Lawsuit";
+import schema from "../schemas/createNewLawsuit";
 
 export async function getAll(req: Request, res: Response) {
   try {
@@ -15,25 +16,22 @@ export async function getAll(req: Request, res: Response) {
 
 export async function register(req: Request, res: Response) {
   try {
-    const {
-      clientId,
-      stateId,
-      number,
-      value,
-      created_at,
-      status,
-    }: LawsuitInterface = req.body;
-    if (!clientId || !stateId || !number || !value || !created_at || !status)
+    const lawsuit: LawsuitInterface = req.body;
+    if (
+      !lawsuit.clientId ||
+      !lawsuit.stateId ||
+      !lawsuit.number ||
+      !lawsuit.value ||
+      !lawsuit.created_at ||
+      !lawsuit.status
+    )
       return res.sendStatus(httpStatus.BAD_REQUEST);
 
-    await service.register({
-      clientId,
-      stateId,
-      number,
-      value,
-      created_at,
-      status,
-    });
+    const validation = schema.validate(lawsuit);
+    if (validation.error)
+      return res.sendStatus(httpStatus.UNPROCESSABLE_ENTITY);
+
+    await service.register(lawsuit);
     res.sendStatus(httpStatus.CREATED);
   } catch (e) {
     console.log(e);
